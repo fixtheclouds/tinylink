@@ -22,4 +22,4 @@
 .idea
 
 # Database config
-/config/database.yml
+config/database.yml
