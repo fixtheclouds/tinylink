@@ -1,8 +1,25 @@
-%form
-  %fieldset.uk-fieldset
-    %legend.uk-legend= 'Add new link'
+%div.uk-text-left{ng: { init: "total = #{Link.all.count}", controller: 'linksController' }}
+  .uk-margin= 'Total URLs in database: {{ total }}'
 
-    %div.uk-margin
-      = label_tag :url, class: 'uk-form-label'
-      %div.uk-form-controls
-        %input#url{type: 'text', placeholder: 'Enter full URL'}
+  %form.uk-form{ng: { submit: 'submit()' }}
+    %fieldset.uk-fieldset
+      %legend.uk-legend= 'Add a new link'
+
+      %div.uk-margin
+        = label_tag :url, 'URL', class: 'uk-form-label'
+        %div.uk-form-controls
+          %input.uk-width-1-1#url{type: 'text', placeholder: 'http://example.com', ng: { model: 'link.url', change: 'checkHTTPStatus()', 'model-options' => '{ debounce: 500 }' }}
+
+      %div.uk-margin
+        = label_tag :short_url, 'Short URL (optional, max. 8 characters)', class: 'uk-form-label'
+        %div.uk-form-controls
+          %input.uk-width-1-1#short_url{type: 'text', placeholder: 'sHortOne', ng: { model: 'link.short_url' }}
+
+      %p.uk-margin
+        %button.uk-button.uk-button-primary= 'Create!'
+
+  .uk-alert.uk-alert-success{ng: { show: 'latest' }, 'data-uk-alert' => ''}
+    %p
+      = 'Latest URL created:'
+      %a{href: '{{ latest.short_url }}', target: '_blank' }
+        = '{{ latest.short_url }}'

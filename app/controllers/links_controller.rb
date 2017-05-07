@@ -1,12 +1,14 @@
 class LinksController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+
   def create
     link = Link.new(link_params)
-    Link.short_url = generate_short_url unless params[:short_url].present?
+    link.short_url = generate_short_url unless params[:short_url].present?
     if link.save
       render json: link
     else
-      render json: link.errors, status: 422
+      render json: link.errors.full_messages, status: 422
     end
   end
 
@@ -18,7 +20,7 @@ class LinksController < ApplicationController
   private
 
   def link_params
-    params.permit(:url, :short_url, :status)
+    params.permit(:url, :short_url, :http_status)
   end
 
   def generate_short_url
