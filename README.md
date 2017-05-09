@@ -16,3 +16,27 @@ original url.
 2. Application should remove origin-short url pair from DB on the 15th day after its creation.
 3. Application should count amount of short url usage. Application should have API for short url creations.
 4. GitHub repo should contain a descriptive commits history
+
+## Developer notes
+### Tools used for this app:
+
+* Ruby 2.3.1 + Rails 5.1.0
+* PostgreSQL 9.4
+* AngularJS 1.6.4
+* UIkit 2.24
+
+### Public API
+
+URL: `/link`
+
+Method: `POST`
+
+Parameters: 
+* `url` - original URL
+* `short_url` - (optional) short URL
+
+Response:
+```
+{ "url" : <generated_url> }
+``` 
+
