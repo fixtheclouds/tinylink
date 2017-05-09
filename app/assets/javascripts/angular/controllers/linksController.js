@@ -15,9 +15,12 @@
     // Scope
     $scope.link = angular.copy(link);
     $scope.latest = null;
+    $scope.loading = false;
 
     $scope.submit = function () {
+      $scope.loading = true;
       Links.create($scope.link).$promise.then(function (response) {
+        $scope.loading = false;
         UIkit.notify({
           message : 'Short URL has been successfully saved!',
           status  : 'success',
@@ -30,6 +33,7 @@
         $scope.link = angular.copy(link);
         $scope.total += 1;
       }, function (response) {
+        $scope.loading = false;
         response.data.forEach(function (error) {
           UIkit.notify({
             message : error,
