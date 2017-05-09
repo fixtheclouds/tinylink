@@ -6,7 +6,7 @@ class LinksController < ApplicationController
     link = Link.new(link_params)
     link.short_url = generate_short_url unless params[:short_url].present?
     if link.save
-      render json: link
+      render json: { url: "#{request.protocol + request.host_with_port}/#{link.short_url}" }
     else
       render json: link.errors.full_messages, status: 422
     end

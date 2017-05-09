@@ -25,8 +25,7 @@
           pos     : 'bottom-center'
         });
         $scope.latest = {
-          url: response.url,
-          short_url: window.location.origin + '/' + response.short_url
+          short_url: response.url
         };
         $scope.link = angular.copy(link);
         $scope.total += 1;
