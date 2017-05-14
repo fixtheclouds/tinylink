@@ -3,6 +3,9 @@
 
   Factory.$inject = ['$resource'];
 
+  /**
+   * RESTful angular resource for Links
+   */
   function Factory($resource) {
     return $resource('/links/:id', {}, {
       create: {

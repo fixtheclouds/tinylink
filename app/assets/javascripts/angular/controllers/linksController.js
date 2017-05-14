@@ -5,18 +5,26 @@
 
   function Controller($scope, Links) {
 
-    // Vars
+    /**
+     * Variables
+     */
     var link = {
       url: null,
       short_url: null,
       http_status: null
     };
+    const timeout = 5000; // 5 seconds
 
-    // Scope
+    /**
+     * Scope
+     */
     $scope.link = angular.copy(link);
     $scope.latest = null;
     $scope.loading = false;
 
+    /**
+     * Form submission
+     */
     $scope.submit = function () {
       $scope.loading = true;
       Links.create($scope.link).$promise.then(function (response) {
@@ -24,7 +32,7 @@
         UIkit.notify({
           message : 'Short URL has been successfully saved!',
           status  : 'success',
-          timeout : 5000,
+          timeout : timeout,
           pos     : 'bottom-center'
         });
         $scope.latest = {
@@ -38,21 +46,21 @@
           UIkit.notify({
             message : error,
             status  : 'danger',
-            timeout : 5000,
+            timeout : timeout,
             pos     : 'bottom-center'
           });
         })
       });
     };
 
-    // Pattern to match valid short URL characters
-    $scope.shortUrlRegex = /^[\$\-_.+!*'(),a-zA-Z\d]{1,8}$/;
-
     /**
      * Full URL validator;
      * @link https://regex101.com/library/eN9vI3
      */
     $scope.urlRegex = /^(http|ftp|https)?(\:\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^!=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])+$/;
+
+    // Pattern to match valid short URL characters
+    $scope.shortUrlRegex = /^[\$\-_.+!*'(),a-zA-Z\d]{1,8}$/;
 
   }
 })();
