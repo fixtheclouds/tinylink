@@ -5,6 +5,9 @@ class Link < ApplicationRecord
   validates_uniqueness_of :short_url
   validate :valid_url
 
+  before_validation :generate_short_url, if: Proc.new { |link| link.short_url.blank? }
+  before_validation :sanitize_url
+
   def valid_url
     error = ': URL does not exist'
     begin
@@ -26,6 +29,16 @@ class Link < ApplicationRecord
     rescue
       errors.add(:url, ': Invalid URL')
     end
+  end
+
+  # Produces random Base36 8-character sequence
+  def generate_short_url
+    self.short_url = ("%d%d" % [rand(100), Time.now.to_i]).to_i.to_s(36)
+  end
+
+  # Adds protocol to url if it's missing
+  def sanitize_url
+    self.url = "http://#{self.url}" unless self.url=~/^https?:\/\//
   end
 
 end
