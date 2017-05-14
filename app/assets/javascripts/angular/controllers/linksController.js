@@ -10,8 +10,7 @@
      */
     var link = {
       url: null,
-      short_url: null,
-      http_status: null
+      short_url: null
     };
     const timeout = 5000; // 5 seconds
 

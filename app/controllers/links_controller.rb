@@ -8,7 +8,6 @@ class LinksController < ApplicationController
     link = Link.new(link_params)
     link.short_url = generate_short_url unless params[:short_url].present?
     link.url = sanitize_url(params[:url])
-    link.save_http_status
     if link.save
       render json: { url: "#{request.protocol + request.host_with_port}/#{link.short_url}" }
     else
@@ -24,7 +23,7 @@ class LinksController < ApplicationController
   private
 
   def link_params
-    params.permit(:url, :short_url, :http_status)
+    params.permit(:url, :short_url)
   end
 
   # Produces random Base36 8-character sequence
