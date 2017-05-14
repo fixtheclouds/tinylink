@@ -4,21 +4,21 @@
     %div.uk-text-left{ng: { init: "total = #{Link.all.count}", controller: 'linksController' }}
       .uk-margin= 'Total URLs in database: {{ total }}'
 
-      %form.uk-form{ng: { submit: 'submit()' }}
+      %form.uk-form{name: 'form', ng: { submit: 'submit()' }}
         %fieldset.uk-fieldset
 
           %div.uk-margin
             = label_tag :url, 'URL', class: 'uk-form-label'
             %div.uk-form-controls
-              %input.uk-width-1-1#url{type: 'text', placeholder: 'http://example.com', ng: { model: 'link.url', change: 'checkHTTPStatus()'}}
+              %input.uk-width-1-1#url{type: 'text', name: 'url', required: 'true', autocomplete: 'off', placeholder: 'http://example.com', ng: { model: 'link.url', pattern: 'urlRegex', change: 'checkHTTPStatus()', class: '{ "uk-form-danger": !form.url.$valid, "uk-form-success": form.url.$valid }' }}
 
           %div.uk-margin
             = label_tag :short_url, 'Short URL (optional, max. 8 characters)', class: 'uk-form-label'
             %div.uk-form-controls
-              %input.uk-width-1-1#short_url{type: 'text', placeholder: 'sHortOne', ng: { model: 'link.short_url' }}
+              %input.uk-width-1-1#short_url{type: 'text', name: 'short_url', placeholder: 'sHortOne', ng: { model: 'link.short_url', pattern: 'shortUrlRegex', class: '{ "uk-form-danger": !form.short_url.$valid, "uk-form-success": link.short_url.length && form.short_url.$valid }' }}
 
           %p.uk-margin
-            %button.uk-button.uk-button-primary{ng: { disabled: '!link.url || loading' }}
+            %button.uk-button.uk-button-primary{ng: { disabled: '!link.url || loading || !form.$valid' }}
               = 'Create!'
 
       .uk-alert.uk-alert-success{ng: { show: 'latest' }, 'data-uk-alert' => ''}

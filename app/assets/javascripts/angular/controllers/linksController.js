@@ -45,5 +45,14 @@
       });
     };
 
+    // Pattern to match valid short URL characters
+    $scope.shortUrlRegex = /^[\$\-_.+!*'(),a-zA-Z\d]{1,8}$/;
+
+    /**
+     * Full URL validator;
+     * @link https://regex101.com/library/eN9vI3
+     */
+    $scope.urlRegex = /^(http|ftp|https)?(\:\/\/)?[\w-]+(\.[\w-]+)+([\w.,@?^!=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])+$/;
+
   }
 })();
