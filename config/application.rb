@@ -1,6 +1,11 @@
 require_relative 'boot'
 
-require 'rails/all'
+require 'active_model/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'action_mailer/railtie'
+require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,7 +21,7 @@ module Tinylink
     # -- all .rb files in that directory are automatically loaded.
     config.action_dispatch.default_headers.merge!({
                                                     'Access-Control-Allow-Origin' => '*',
-                                                    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+                                                    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(',')
                                                   })
   end
 end
